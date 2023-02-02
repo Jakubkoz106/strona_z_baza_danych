@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- mobile metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Mcquinni</title>
+  <link rel="stylesheet" href = "css/style.css" >
+  <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  color:white;
+
+}
+
+#customers td, #customers th {
+
+  border-radius: 6px;
+  padding: 8px;
+
+}
+
+#customers tr:nth-child(even){background-color: rgba(255,255,255,0.13);}
+#customers tr:nth-child(odd){background-color: rgba(255,255,255,0.40);}
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgba(255,255,255,0.7);
+  color: white;
+  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+}
+
+
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <ul class="nav-menu">
+      <li class="homebtn"> <a href="#home">home</a> </li>
+      <li> <a href="#baza1">baza1</a> </li>
+      <li> <a href="#baza2">baza2</a> </li>
+      <!--<li> <a href="/index" type="submit" >Log Out</a> </li>  -->
+      <!-- tutaj najprawdopodobniej do poprawyyy -->
+      <li><form th:action="@{/logout}" method="post">
+        <input class = "bttn" type="submit" value="Wyloguj się"/>
+      </form>
+      </li>
+    </ul>
+  </div>
+  <!--
+  <div class="container">
+      <div class="top-left"><p id="home"><h2>Jesteś zalogowany jako: [[${#httpServletRequest.remoteUser}]].</h2></p></div>
+  </div>
+  -->
+  <div class="items">
+    <div class="tagline" id="home">
+      <h2>Jesteś zalogowany jako: [[${#httpServletRequest.remoteUser}]].</h2>
+
+      <h4><ul>
+        <h3> Posiadasz uprawnienia do:</h3>
+        <br>
+        <li>Danych o posiadanych w ofercie pojazdach z możliwością ich modyfikacji.</li>
+        <li>Danych odnośnie pracowników z możliwością ich modyfikacji.</li>
+        <li>Danych odnośnie klientów z możliwością ich modyfikacji.</li>
+      </ul></h4>
+
+
+    </div>
+
+    <div id="baza1">
+      <a href="/new">Enter new sale<a/>
+        <!-- Table -->
+        <table id="customers" class="center" style="width:90%"> <!-– border –
+          obramowanie, cellpadding – rozmiar komórki -->
+          <!-- Table header -->
+          <thead>
+          <tr> <!-- Table row -->
+            <th>Nazwa Marki</th> <!–- Table column -->
+            <th>Kod modelu</th>
+            <th>Rok Produkcji</th>
+            <th>Pojemnosc Silnika</th>
+            <th>Rodzaj Paliwa</th> <!–- Table column -->
+            <th>Standart Wyposazenia</th>
+            <th>Cena</th>
+            <th>Dostepnosc</th>
+
+          </tr>
+          </thead>
+          <!-- Table body -->
+          <tbody>
+          <tr th:each = "Modele : ${listModele}">
+            <td th:text = "${Modele.nazwa}">Nazwa Marki</td>
+            <td th:text = "${Modele.kod}">Kod modelu</td>
+            <td th:text = "${Modele.rokProdukcji}">Rok Produkcji</td>
+            <td th:text = "${Modele.pojemnoscSilnika}">Pojemnosc silnika</td>
+            <td th:text = "${Modele.rodzajPaliwa}">Rodzaj Paliwa</td>
+            <td th:text = "${Modele.standartWyposazenia}">Standart Wyposazenia</td>
+            <td th:text = "${Modele.cena}">Cena</td>
+            <td th:text = "${Modele.dostepnosc}">Dostepnosc</td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+  
+    <div id="baza2">
+
+      <table id="customers" class="center" style="width:90%"> <!-– border –
+        obramowanie, cellpadding – rozmiar komórki -->
+        <!-- Table header -->
+        <thead>
+        <tr> <!-- Table row -->
+          <th>Imie</th> <!–- Table column -->
+          <th>Nazwisko</th>
+          <th>Data urodzenia</th>
+          <th>Pesel</th>
+          <th>Plec</th> <!–- Table column -->
+          <th>Data zatrudnienia</th>
+          <th>Nr telefonu</th>
+          <th>Wysokosc wynagrodzenia</th>
+          <th>Miasto</th>
+          <th>Ulica</th>
+
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <tr th:each = "Pracownik : ${listPracownik}">
+          <td th:text = "${Pracownik.imie}">Imie</td>
+          <td th:text = "${Pracownik.nazwisko}">Nazwisko</td>
+          <td th:text = "${Pracownik.dataUrodzenia}">Data urodzenia</td>
+          <td th:text = "${Pracownik.pesel}">Pesel</td>
+          <td th:text = "${Pracownik.plec}">Plec</td>
+          <td th:text = "${Pracownik.dataZatrudniena}">Data zatrudnienia</td>
+          <td th:text = "${Pracownik.nrTelefonu}">Nr telefonu</td>
+          <td th:text = "${Pracownik.wysokoscWynagrodzenia}">Wysokosc wynagrodzenia</td>
+          <td th:text = "${Pracownik.miasto}">Miasto</td>
+          <td th:text = "${Pracownik.ulica}">Ulica</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</header>
+
+</body>
+</html>
